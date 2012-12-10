@@ -1,0 +1,5 @@
+Changelog for CacheMaster
+
+CacheMaster 1.0.0
+---------------------------------
+Initial Version
