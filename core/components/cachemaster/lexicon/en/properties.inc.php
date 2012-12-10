@@ -34,3 +34,9 @@
  * @package cachemaster
  **/
 
+
+
+/* Used in properties.cachemaster.plugin.php */
+$_lang['execute_always_desc'] = 'If Yes, always execute; if No, execute only when Empty Cache is unchecked.';
+$_lang['allowed_field_changes_desc'] = 'When fields other than these are changed, the whole site cache is cleared';
+$_lang['check_tvs_desc'] = 'If this is set, any change in a TV will cause the site cache to be cleared';

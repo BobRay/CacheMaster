@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CacheMaster plugin for CacheMaster extra
  *
@@ -71,65 +70,63 @@ if (!function_exists("my_debug")) {
 
 
 my_debug("In Plugin\n", true);
-// $emptyCache = $scriptProperties['resource']->_fields['syncsite'];
-$emptyCache = $_POST['syncsite'];
+
+$emptyCache = $modx->getOption('syncsite', $_POST, false) == true;
+$always = $modx->getOption('executeAlways', $scriptProperties, false);
+
 /* don't execute for new documents or if Empty Cache checkbox is checked */
-if ($mode == modSystemEvent::MODE_NEW  || $emptyCache ) {
-    my_debug('Syncsite is set');
+if ($mode == modSystemEvent::MODE_NEW) {
     return;
 }
+
+if ( (! $always) && $emptyCache ) {
+    return;
+}
+/* Turn off automatic cache clearing */
 $scriptProperties['resource']->_fields['syncsite'] = 0;
 $_POST['syncsite'] = 0;
-my_debug ('Not a new document');
 
-if (! ($resource instanceof modDocument)) {
-    my_debug('Not a modDocument object');
-} else {
-    my_debug('Resource is a modDocument object');
-}
+$checkTvs = $modx->getOption('checkTvs', $scriptProperties, true);
+$allowed = $modx->getOption('AllowedFieldChanges',$scriptProperties,null);
+$allowed = empty($allowed)? 'content,introtext,description' : $allowed;
+$allowedChanges = explode(',', $allowed);
+
 /* set resource context and id */
 $ctx = $resource->get('context_key');
 $docId = $resource->get('id');
 
-if (!empty($ctx)) {
-    my_debug('Got the context key: ' . $ctx);
-}
 /* set path to cache file */
 $path = MODX_CORE_PATH . 'cache/resource/' . $ctx . '/resources/' . $docId . '.cache.php';
-$checkTvs = $modx->getOption('checkTvs',$scriptProperties,true);
 
-
-$allowed = $modx->getOption('AllowedFieldChanges',$scriptProperties,null);
-$allowed = empty($allowed)? 'content,introtext,description' : $allowed;
-$allowedChanges = explode(',', $allowed);
 
 $oldResource = $modx->getObject('modResource', $docId);
   /*  just in case */
 if ( (! $oldResource) || (! $resource)) {
   return;
-} else {
-  my_debug('Both old and new resource retrieved successfully');
 }
+
+
 $old = $oldResource->toArray();
 $new = $resource->toArray();
 $diffs = array_diff($old, $new);
 
-my_debug("OLD: " . print_r($old, true) . "\n");
-my_debug("NEW: " . print_r($new, true) . "\n");
+
+
 foreach($allowedChanges as $field) {
   unset($diffs[$field]);
 }
   
   $count = count($diffs);
-  my_debug('Count = ' . $count);
-  // $res = $scriptProperties['resource']->_fields['syncsite'];
-  //$res = $scriptProperties;
-  $res = $_POST;
-ob_start();
-var_dump($res);
-$dump = ob_get_clean();
- //my_debug($dump);
+
+  /*$res = $scriptProperties;
+  ob_start();
+  var_dump($res);
+  $dump = ob_get_clean();
+  my_debug($dump);*/
+
 $ok = true;
+
+/* See if any TVs have changed */
 if ($checkTvs) {
     if (isset($scriptProperties['data']['tvs'])) {
         unset($scriptProperties['data']['tvs']);
@@ -151,20 +148,20 @@ if ($checkTvs) {
 
             if ($val != $v) {
                 $ok = false;
-                my_debug('TV ' . $tv . ' Changed' );
-                my_debug('OLD: ' . $val . 'NEW: ' . $v);
+                // my_debug('TV ' . $tv . ' Changed' );
+                // my_debug('OLD: ' . $val . 'NEW: ' . $v);
                 break;
             }
-            //my_debug('TV: ' . $tv. ' --- ' . $v );
-
         }
     }
 }
 
-  /* editedon should be the only thing still set */
+  /* editedon should be the only thing still set if only allowed changes have been made
+   * so count will be 1 */
 if (($count == 1) && $ok) {
     my_debug('Did Not Clear Site Cache');
-
+    $ck = $resource->getCacheKey();
+    my_debug('CK: ' . $ck);
     $modx->cacheManager->delete($resource->getCacheKey(), array(
             xPDO::OPT_CACHE_KEY => $modx->getOption('cache_resource_key', null, 'resource'),
             xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_resource_handler', null,
@@ -178,7 +175,7 @@ if (($count == 1) && $ok) {
         unlink($path);
     }
 
-} else { /* clear the site cache */
+} else { /* clear the whole site cache */
   my_debug('Cleared Site Cache');
   $cm = $modx->getCacheManager();
   $cm->refresh();
