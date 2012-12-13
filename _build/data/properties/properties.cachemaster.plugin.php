@@ -15,7 +15,7 @@
 $properties = array( 
     array( 
         'name' => 'executeAlways',
-        'desc' => 'execute_always_desc',
+        'desc' => 'cm_execute_always_desc',
         'type' => 'combo-boolean',
         'options' => '',
         'value' => '',

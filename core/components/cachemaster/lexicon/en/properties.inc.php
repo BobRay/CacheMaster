@@ -37,4 +37,4 @@
 
 
 /* Used in properties.cachemaster.plugin.php */
-$_lang['execute_always_desc'] = 'If Yes, always execute; if No, execute only when Empty Cache is unchecked.';
+$_lang['cm_execute_always_desc'] = 'If Yes, always execute; if No, execute only when Empty Cache is unchecked.';
