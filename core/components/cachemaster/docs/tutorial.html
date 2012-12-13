@@ -1,6 +1,7 @@
-<p>CacheMaster project for MyComponent extra</p>
 
-<p>(Jump to <a href="[[~[[*id]]]]#propertiesTable">Properties Table</a>.)</p>
+
+<h3>Overview</h3>
+<p>On a large site, MODX's default behavior of clearing the site cache whenever you save a Resource can really slow things down for your visitors. The CacheMaster Plugin for MODX Revolution clears the cache for a single Resource without clearing the rest of the site cache.</p>
 
 <h3>Installing CacheMaster</h3>
 
@@ -10,11 +11,23 @@ Revolution Repository (AKA Web Transport Facility). Put CacheMaster in the searc
 when it changes to "Downloaded," click on the "Finish" button. That should bring you back to your Package Management grid. Click on the
 "Install" button next to CacheMaster in the grid. The CacheMaster package should now be installed.</p>
 
-<h3>Usage</h3>
+<h3>Using CacheMaster</h3>
+
+<p>CacheMaster only executes when you update an existing Resource. It will not do anything at all when you create a new Resource (i.e., MODX will clear the cache normally when you save a newly created Resource).</p>
+
+<p>When CacheMaster does execute, it clears the cache for the Resource you are saving, then tells MODX not to clear the site cache. CacheMaster has two modes, based on its only property: <fixedpre>&executeAlways</fixedpre>. The default value of the property is <fixedpre>No</fixedpre>. With that setting, CacheMaster will only execute when you manually uncheck the &quot;Empty Cache&quot; checkbox on the Settings tab before saving the Resource. The &quot;Empty Cache&quot; checkbox is always checked by default in MODX, so whenever you don't want the site cache cleared, you need to remember to uncheck it before saving the Resource.</p>
+
+<p>If <fixedpre>&executeAlways</fixedpre> is set to <fixedpre>Yes</fixedpre>, CacheMaster will always execute regardless of the state of the &quot;Empty Cache&quot; checkbox &mdash; the cache for the resource will be cleared and the site cache will not. In that case, if you do want the site cache cleared, you need to clear it yourself using the Site | Clear Cache option on the Manger's Top Menu.</p>
+
+<p>To set the <fixedpre>&executeAlways</fixedpre> property, edit the Plugin, and set the property on the Properties Tab. Don't forget to save the Plugin. Note that if you change the value to <fixedpre>Yes</fixedpre> it will be set back to <fixedpre>No</fixedpre> if you upgrade CacheMaster. To avoid that, create a property set for the Plugin.</p>
+
+[[$CreatePluginPropertySet? &pluginName=`CacheMaster`]]
 
 
+<h3>Things to Remember</h3>
 
+<p>Failing to clear the site cache will speed up page loads for your site, but if you're not careful, it can leave you with pages that are not up-to-date. If, for example, you change the Menu Title of a page, any cached Wayfinder menus will show the old name until the site cache is cleared. When in doubt, you can always clear the site cache Manually using the Manager's Top Menu.</p>
 
-<a name="propertiesTable"></a>
+<p>CacheMaster will clear the cache for a single Resource if you use the MODX Revolution default cache setup. It is designed to work with other caching strategies, but has not been tested with them.</p>
 
-<h3>CacheMaster Properties</h3>
+<p>&nbsp;</p>
