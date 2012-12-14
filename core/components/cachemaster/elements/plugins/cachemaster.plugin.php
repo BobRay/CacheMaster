@@ -45,8 +45,8 @@ if ($mode == modSystemEvent::MODE_NEW) {
 
 switch($modx->event->name) {
     case 'OnDocFormPrerender':
-        /* If &executeAlways is set, clear the Empty Cache checkbox */
-        if (!empty($scriptProperties['executeAlways'])) {
+        /* If &uncheckEmptyCache is set, clear the Empty Cache checkbox */
+        if (!empty($scriptProperties['unCheckEmptyCache'])) {
         $modx->regClientStartupHTMLBlock('<script type="text/javascript">
             Ext.onReady(function() {
                 Ext.getCmp("modx-resource-syncsite").setValue(false);
