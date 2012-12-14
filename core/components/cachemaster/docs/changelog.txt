@@ -1,6 +1,6 @@
 Changelog for CacheMaster
 
-CacheMaster 1.0.2
+CacheMaster 1.0.3
 ---------------------------------
 Fixed bug with property name
 Refactored to uncheck Empty Cache checkbox
