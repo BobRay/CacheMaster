@@ -1,5 +1,9 @@
 Changelog for CacheMaster
 
+CacheMaster 1.0.1
+---------------------------------
+Refactored to uncheck Empty Cache checkbox
+
 CacheMaster 1.0.0
 ---------------------------------
 Initial Version

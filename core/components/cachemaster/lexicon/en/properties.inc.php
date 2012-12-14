@@ -37,4 +37,4 @@
 
 
 /* Used in properties.cachemaster.plugin.php */
-$_lang['cm_execute_always_desc'] = 'If Yes, always execute; if No, execute only when Empty Cache is unchecked.';
+$_lang['cm_uncheck_empty_cache_desc'] = 'If set to Yes, unchecks the Empty Cache checkbox when the Create/Edit Resource panel is loaded; Default: No';

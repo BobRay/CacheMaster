@@ -3,7 +3,7 @@
 * Resolver to connect plugins to system events for CacheMaster extra
 *
 * Copyright 2012 by Bob Ray <http://bobsguides.com>
-* Created on 12-13-2012
+* Created on 12-14-2012
 *
  * CacheMaster is free software; you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
@@ -72,6 +72,12 @@ if ($object->xpdo) {
                 0 =>  array (
                   'pluginid' => 'CacheMaster',
                   'event' => 'OnBeforeDocFormSave',
+                  'priority' => '0',
+                  'propertyset' => '0',
+                ),
+                1 =>  array (
+                  'pluginid' => 'CacheMaster',
+                  'event' => 'OnDocFormPrerender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),

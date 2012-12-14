@@ -1,7 +1,7 @@
 
 
 <h3>Overview</h3>
-<p>On a large site, MODX's default behavior of clearing the site cache whenever you save a Resource can really slow things down for your visitors. The CacheMaster Plugin for MODX Revolution clears the cache for a single Resource without clearing the rest of the site cache.</p>
+<p>On a large site, MODX's default behavior of clearing the cache for all Resources whenever you save a Resource can really slow things down for your visitors. The CacheMaster Plugin for MODX Revolution allows you to have the cache cleared for a single Resource when you save it, without clearing anything else.</p>
 
 <h3>Installing CacheMaster</h3>
 
@@ -13,13 +13,22 @@ when it changes to "Downloaded," click on the "Finish" button. That should bring
 
 <h3>Using CacheMaster</h3>
 
-<p>CacheMaster only executes when you update an existing Resource. It will not do anything at all when you create a new Resource (i.e., MODX will clear the cache normally when you save a newly created Resource).</p>
+<p>The default behavior of MODX is to clear the cache for all Resources if the &quot;Empty Cache&quot; checkbox is checked and for no Resources (not even the current one) if the checkbox is not checked. Cachemaster, if the Plugin is enabled, will always clear the cache for the current Resource regardless of whether the
+&quot;Empty Cache&quot; checkbox is checked or not.</p>
 
-<p>When CacheMaster does execute, it clears the cache for the Resource you are saving, then tells MODX not to clear the site cache. CacheMaster has two modes, based on its only property: <fixedpre>&executeAlways</fixedpre>. The default value of the property is <fixedpre>No</fixedpre>. With that setting, CacheMaster will only execute when you manually uncheck the &quot;Empty Cache&quot; checkbox on the Settings tab before saving the Resource. The &quot;Empty Cache&quot; checkbox is always checked by default in MODX, so whenever you don't want the site cache cleared, you need to remember to uncheck it before saving the Resource.</p>
+<p>CacheMaster only executes when you update an existing Resource. It will not do anything at all when you create a new Resource (i.e., MODX will clear the cache normally when you save a newly created Resource, unless you manually uncheck the
+&quot;Empty Cache&quot;) checkbox.</p>
 
-<p>If <fixedpre>&executeAlways</fixedpre> is set to <fixedpre>Yes</fixedpre>, CacheMaster will always execute regardless of the state of the &quot;Empty Cache&quot; checkbox &mdash; the cache for the resource will be cleared and the site cache will not. In that case, if you do want the site cache cleared, you need to clear it yourself using the Site | Clear Cache option on the Manger's Top Menu.</p>
+<p>CacheMaster has only one property: <fixedpre>&uncheckEmptyCache</fixedpre>. The default value of the property is <fixedpre>No</fixedpre>. With that setting, the &quot;Empty Cache&quot; checkbox on the Settings tab will be checked when you edit any Resource (as it is without the Plugin). If you leave the checkbox checked and save the Resource, the cache will be cleared for all Resources. If you uncheck it before saving the Resource, only the cache for the current Resource will be cleared.</p>
 
-<p>To set the <fixedpre>&executeAlways</fixedpre> property, edit the Plugin, and set the property on the Properties Tab. Don't forget to save the Plugin. Note that if you change the value to <fixedpre>Yes</fixedpre> it will be set back to <fixedpre>No</fixedpre> if you upgrade CacheMaster. To avoid that, create a property set for the Plugin.</p>
+<p>If <fixedpre>&uncheckEmptyCache</fixedpre> is set to <fixedpre>Yes</fixedpre>, CacheMaster will clear the &quot;Empty Cache&quot; checkbox &mdash; when the Create/Edit Resource panel is loaded. If you leave it unchecked and save the Resource, the cache for the resource will be cleared and the site cache will not. If you do want the site cache cleared, you need to manually check the
+&quot;Empty Cache&quot; checkbox yourself.</p>
+
+<p>To put that all another way, when CacheMaster is enabled, saving a Resource with the &quot;Empty Cache&quot; checkbox checked will always clear the cache for all resources. Saving a Resource with the
+&quot;Empty Cache&quot; checkbox unchecked will always clear the cache just for the current Resource. The &quot;&uncheckEmptyCache&quot; property, if set, just unchecks the
+&quot;Empty Cache&quot; checkbox for you as the form is loaded.</p>
+
+<p>To set the <fixedpre>&uncheckEmptyCache</fixedpre> property, edit the Plugin, and set the property on the Properties Tab. Don't forget to save the Plugin. Note that if you change the value to <fixedpre>Yes</fixedpre> it will be set back to <fixedpre>No</fixedpre> if you upgrade CacheMaster. To avoid that, create a property set for the Plugin.</p>
 
 [[$CreatePluginPropertySet? &pluginName=`CacheMaster`]]
 

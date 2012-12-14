@@ -33,92 +33,83 @@
  * @package cachemaster
  **/
 
-
-if (!function_exists("my_debug")) {
-    function my_debug($message, $clear = false) {
-        global $modx;
-        /* @var $chunk modChunk */
-        $content = '';
-
-        $chunk = $modx->getObject('modChunk', array('name' => 'debug'));
-        if (!$chunk) {
-            $chunk = $modx->newObject('modChunk', array('name' => 'debug'));
-            $chunk->setContent('');
-            $chunk->save();
-            $chunk = $modx->getObject('modChunk', array('name' => 'debug'));
-        } else {
-            if ($clear) {
-                $content = '';
-            } else {
-                $content = $chunk->getContent();
-            }
-        }
-        $content .= $message . "\n";
-        $chunk->setContent($content);
-        $chunk->save();
-    }
-}
-
 /* @var $modx modX  */
 /* @var $scriptProperties array */
 /* @var $mode int */
 
 
-/* See if empty cache checkbox is checked */
-$emptyCache = $modx->getOption('syncsite', $_POST, false) == true;
-
-/* See if &executeAlways is set */
-$always = $modx->getOption('executeAlways', $scriptProperties, false);
-
-/* don't execute for new documents or if empty cache is set
- * and &executeAlways is not */
-if ( ($mode == modSystemEvent::MODE_NEW) || ((!$always) && $emptyCache)) {
-    return '';
+/* don't execute for new documents */
+if ($mode == modSystemEvent::MODE_NEW) {
+    return;
 }
 
-/* Turn off automatic cache clearing */
-$scriptProperties['resource']->_fields['syncsite'] = 0;
-$_POST['syncsite'] = 0;
+switch($modx->event->name) {
+    case 'OnDocFormPrerender':
+        /* If &executeAlways is set, clear the Empty Cache checkbox */
+        if (!empty($scriptProperties['executeAlways'])) {
+        $modx->regClientStartupHTMLBlock('<script type="text/javascript">
+            Ext.onReady(function() {
+                Ext.getCmp("modx-resource-syncsite").setValue(false);
+            });
+            </script>');
 
-/* get resource context and id */
-$ctx = $resource->get('context_key');
-$docId = $resource->get('id');
+        }
+        break;
 
-/* set path to default cache file */
-$path = MODX_CORE_PATH . 'cache/resource/' . $ctx . '/resources/' . $docId . '.cache.php';
+    case 'OnBeforeDocFormSave': 
 
-$ck = $resource->getCacheKey();
-$mgrCtx = $modx->context->get('key');
-$cKey = str_replace($mgrCtx, $ctx, $ck);
+        /* See if empty cache checkbox is checked */
+        $emptyCache = $modx->getOption('syncsite', $_POST, false) == true;
 
-$modx->cacheManager->delete($cKey, array(
-    xPDO::OPT_CACHE_KEY => $modx->getOption('cache_resource_key', null, 'resource'),
-    xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_resource_handler', null,
-        $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
-    xPDO::OPT_CACHE_FORMAT => (integer)$modx->getOption('cache_resource_format', null,
-        $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
-    )
-);
-/* see if resource exists in any other contexts, and if so, clear those caches too */
-$ctxResources = $modx->getCollection('modContextResource', array('resource' => $docId));
+        /* If EmptyCache is set, MODX will clear everything, if not,
+         *  we clear the cache for just this resource */
+        if (! $emptyCache) {
 
-if (!empty ($ctxResources)) {
-    foreach ($ctxResources as $ctxResource) {
-        /* @var $ctxResource modContextResource */
-        $key = $ctxResource->get('context_key');
-        $cKey = str_replace($mgrCtx, $key, $ck);
-        $modx->cacheManager->delete($cKey, array(
-            xPDO::OPT_CACHE_KEY => $modx->getOption('cache_resource_key', null, 'resource'),
-            xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_resource_handler', null,
-                $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
-            xPDO::OPT_CACHE_FORMAT => (integer)$modx->getOption('cache_resource_format', null,
-                $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
-           )
-        );
+            /* get resource context and id */
+            $ctx = $resource->get('context_key');
+            $docId = $resource->get('id');
 
-    }
+            /* set path to default cache file */
+            $path = MODX_CORE_PATH . 'cache/resource/' . $ctx . '/resources/' . $docId . '.cache.php';
+
+            $ck = $resource->getCacheKey();
+            $mgrCtx = $modx->context->get('key');
+            $cKey = str_replace($mgrCtx, $ctx, $ck);
+
+            $modx->cacheManager->delete($cKey, array(
+                xPDO::OPT_CACHE_KEY => $modx->getOption('cache_resource_key', null, 'resource'),
+                xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_resource_handler', null,
+                    $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
+                xPDO::OPT_CACHE_FORMAT => (integer)$modx->getOption('cache_resource_format', null,
+                    $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
+                )
+            );
+            /* see if resource exists in any other contexts, and if so, clear those caches too */
+            $ctxResources = $modx->getCollection('modContextResource', array('resource' => $docId));
+
+            if (!empty ($ctxResources)) {
+                foreach ($ctxResources as $ctxResource) {
+                    /* @var $ctxResource modContextResource */
+                    $key = $ctxResource->get('context_key');
+                    $cKey = str_replace($mgrCtx, $key, $ck);
+                    $modx->cacheManager->delete($cKey, array(
+                        xPDO::OPT_CACHE_KEY => $modx->getOption('cache_resource_key', null, 'resource'),
+                        xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_resource_handler', null,
+                            $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
+                        xPDO::OPT_CACHE_FORMAT => (integer)$modx->getOption('cache_resource_format', null,
+                            $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
+                       )
+                    );
+
+                }
+            }
+            /* clear the resource cache the old-fashioned way, just in case */
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        }
+        break;
+
 }
-/* the old-fashioned way, just in case */
-if (file_exists($path)) {
-    unlink($path);
-}
+
+return '';
