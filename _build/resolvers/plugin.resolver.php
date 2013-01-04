@@ -3,7 +3,7 @@
 * Resolver to connect plugins to system events for CacheMaster extra
 *
 * Copyright 2012 by Bob Ray <http://bobsguides.com>
-* Created on 12-14-2012
+* Created on 01-03-2013
 *
  * CacheMaster is free software; you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
@@ -77,7 +77,25 @@ if ($object->xpdo) {
                 ),
                 1 =>  array (
                   'pluginid' => 'CacheMaster',
+                  'event' => 'OnChunkFormPrerender',
+                  'priority' => '0',
+                  'propertyset' => '0',
+                ),
+                2 =>  array (
+                  'pluginid' => 'CacheMaster',
                   'event' => 'OnDocFormPrerender',
+                  'priority' => '0',
+                  'propertyset' => '0',
+                ),
+                3 =>  array (
+                  'pluginid' => 'CacheMaster',
+                  'event' => 'OnPluginFormPrerender',
+                  'priority' => '0',
+                  'propertyset' => '0',
+                ),
+                4 =>  array (
+                  'pluginid' => 'CacheMaster',
+                  'event' => 'OnSnipFormPrerender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),

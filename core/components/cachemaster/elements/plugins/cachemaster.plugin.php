@@ -1,3 +1,4 @@
+<?php
 /**
  * CacheMaster plugin for CacheMaster extra
  *
@@ -37,21 +38,116 @@
 /* @var $scriptProperties array */
 /* @var $mode int */
 
+if (!function_exists("my_debug")) {
+    function my_debug($message, $clear = false)
+    {
+        global $modx;
+        $content = '';
+        $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
+        if (!$chunk) {
+            $chunk = $modx->newObject('modChunk', array('name' => 'Debug'));
+            $chunk->setContent('');
+            $chunk->save();
+            $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
+        } else {
+            if ($clear) {
+                $content = '';
+            } else {
+                $content = $chunk->getContent();
+            }
+        }
+        $content .= $message . "\n";
+        $chunk->setContent($content);
+        $chunk->save();
+    }
+}
+
 
 /* don't execute for new documents */
 if ($mode == modSystemEvent::MODE_NEW) {
     return;
 }
 
-switch($modx->event->name) {
+$sp =& $scriptProperties;
+$event = $modx->event->name;
+$doResources = (bool) $modx->getOption('doResources', $sp, false);
+$doPlugins = (bool) $modx->getOption('doPlugins', $sp, false);
+$doSnippets = (bool) $modx->getOption('doSnippets', $sp, false);
+$doChunks = (bool) $modx->getOption('doChunks', $sp, false);
+$doTemplates = (bool) $modx->getOption('doTemplates', $sp, false);
+$doTVs = (bool) $modx->getOption('doTVs', $sp, false);
+$clearCheckbox = (bool) $modx->getOption('uncheckEmptyCache', $sp, false);
+
+
+/* Bail out if we're not doing this object */
+switch($event) {
     case 'OnDocFormPrerender':
-        /* If &uncheckEmptyCache is set, clear the Empty Cache checkbox */
-        if (!empty($scriptProperties['uncheckEmptyCache'])) {
+    case 'OnBeforeDocFormSave':
+        if (!$doResources) {
+            return;
+        }
+        break;
+    case 'OnSnipFormPrerender':
+    case 'OnBeforeSnipFormSave':
+        if (!$doSnippets) {
+            return;
+        }
+        break;
+    case 'OnPluginFormPrerender':
+    case 'OnBeforePluginFormSave':
+        if (!$doPlugins) {
+            return;
+        }
+        break;
+    case 'OnChunkFormPrerender':
+    case 'OnBeforeChunkFormSave':
+        if (!$doChunks) {
+            return;
+        }
+        break;
+    case 'OnTempFormPrerender':
+    case 'OnBeforeTempFormSave':
+        if (!$doTemplates) {
+            return;
+        }
+        break;
+    case 'OnTVFormPrerender':
+    case 'OnBeforeTVFormSave':
+        if (!$doTVs) {
+            return;
+        }
+        break;
+}
+
+/* Clear Empty Cache checkbox if UncheckEmptyCache is set */
+if (strstr($event, 'Prerender')) {
+    $panel = array(
+        'OnDocFormPrerender' => 'modx-resource-syncsite',
+        'OnSnipFormPrerender' => 'modx-snippet-clear-cache',
+        'OnPluginFormPrerender' => 'modx-plugin-clear-cache',
+        'OnChunkFormPrerender' => 'modx-chunk-clear-cache',
+        'OnTempFormPrerender' => 'modx-template-clear-cache',
+        'OnTVFormPrerender' => 'modx-tv-clear-cache',
+    );
+    if (!$clearCheckbox) {
         $modx->regClientStartupHTMLBlock('<script type="text/javascript">
+            Ext.onReady(function() {
+                Ext.getCmp("' . $panel[$event] . '").setValue(false);
+            });
+            </script>');
+    }
+}
+
+
+switch($event) {
+    case 'OnDocFormPrerender':
+        /* If &executeAlways is set, clear the Empty Cache checkbox */
+        if (!empty($scriptProperties['executeAlways'])) {
+/*        $modx->regClientStartupHTMLBlock('<script type="text/javascript">
             Ext.onReady(function() {
                 Ext.getCmp("modx-resource-syncsite").setValue(false);
             });
-            </script>');
+            </script>');*/
 
         }
         break;
