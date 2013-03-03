@@ -24,7 +24,7 @@ click on the &quot;Back to Package Manager&quot; button. That should bring you b
 </div>
 
 <p>CacheMaster only executes when you update an existing object. It will not do anything at all when you create a new Resource or Element
-(i.e., MODX will clear the cache normally when you save, unless you manually uncheck the &quot;Empty Cache&quot;) checkbox.</p>
+(i.e., MODX will clear the whole site cache normally when you save, unless you manually uncheck the &quot;Empty Cache&quot;) checkbox.</p>
 
 
 <p>CacheMaster has six properties that determine which Elements it operates on and whether it operates on Resources (see table below). In addition to those properties it has the <fixedpre>&uncheckEmptyCache</fixedpre>, property, which controls the &quot;Empty Cache&quot; checkbox on the Create/Edit panel for Resources and Elements.<p>
@@ -58,6 +58,8 @@ click on the &quot;Back to Package Manager&quot; button. That should bring you b
 <h3>Things to Remember</h3>
 
 <p>Failing to clear the site cache will speed up page loads for your site, but if you're not careful, it can leave you with pages that are not up-to-date. If, for example, you change the Menu Title of a page, any cached Wayfinder menus will show the old name until the site cache is cleared.</p>
+
+<p>Similarly, if you change the code of a snippet, plugin, or chunk, and save it using CacheMaster with the &quot;Empty Cache&quot; checkbox unchecked, the cached version of the object itself will be removed, but any cached resources with cached tags for the object will still show the results from the old version of the object.</p>
 
 <p>Objects in MODX are highly interdependent, and it can be difficult to guess what the effects of not clearing the cache will be. That's why the default behavior in MODX is to refresh the entire cache.</p>
 
