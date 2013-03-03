@@ -34,6 +34,19 @@
  * @package cachemaster
  **/
 
+/* Properties
+
+ * @property &doChunks combo-boolean -- Execute for Chunks; Default: No.
+ * @property &doPlugins combo-boolean -- Execute for Plugins; Default: No.
+ * @property &doResources combo-boolean -- Execute for Resources; Default: Yes.
+ * @property &doSnippets combo-boolean -- Execute for Snippets; Default: No.
+ * @property &doTVs combo-boolean -- Execute for Template Variables; Default: No.
+ * @property &doTemplates combo-boolean -- Execute for Templates; Default: No.
+ * @property &uncheckEmptyCache combo-boolean -- If set to Yes, unchecks the Empty Cache checkbox when the Create/Edit Resource panel is loaded; Default: Yes.
+
+ */
+
+
 /* @var $modx modX  */
 /* @var $scriptProperties array */
 /* @var $mode int */

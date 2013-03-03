@@ -24,7 +24,7 @@ $properties = array(
         ),
     array( 
         'name' => 'doPlugins',
-        'desc' => 'cm_do_plugins_desc~~Execute for Plugins',
+        'desc' => 'cm_do_plugins_desc',
         'type' => 'combo-boolean',
         'options' => '',
         'value' => '',
@@ -33,7 +33,7 @@ $properties = array(
         ),
     array( 
         'name' => 'doResources',
-        'desc' => 'cm_do_resources_desc~~Execute for Resources',
+        'desc' => 'cm_do_resources_desc',
         'type' => 'combo-boolean',
         'options' => '',
         'value' => '1',
@@ -42,7 +42,7 @@ $properties = array(
         ),
     array( 
         'name' => 'doSnippets',
-        'desc' => 'cm_do_snippets_desc~~Execute for Snippets',
+        'desc' => 'cm_do_snippets_desc',
         'type' => 'combo-boolean',
         'options' => '',
         'value' => '',
@@ -51,7 +51,7 @@ $properties = array(
         ),
     array( 
         'name' => 'doTVs',
-        'desc' => 'cm_do_tvs_desc~~Execute for Template Variables',
+        'desc' => 'cm_do_tvs_desc',
         'type' => 'combo-boolean',
         'options' => '',
         'value' => '',
@@ -60,7 +60,7 @@ $properties = array(
         ),
     array( 
         'name' => 'doTemplates',
-        'desc' => 'cm_do_templates_desc~~Execute for Templates',
+        'desc' => 'cm_do_templates_desc',
         'type' => 'combo-boolean',
         'options' => '',
         'value' => '',
