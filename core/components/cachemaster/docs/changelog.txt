@@ -1,5 +1,10 @@
 Changelog for CacheMaster
 
+CacheMaster 1.1.0
+---------------------------------
+Now works with both Resources and Elements (except Templates)
+Better sanity checks
+
 CacheMaster 1.0.3
 ---------------------------------
 Fixed bug with property name

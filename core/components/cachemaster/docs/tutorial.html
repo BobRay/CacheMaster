@@ -1,7 +1,9 @@
-
-
 <h3>Overview</h3>
-<p>On a large site, MODX's default behavior of clearing the cache for all Resources whenever you save a Resource can really slow things down for your visitors. The CacheMaster Plugin for MODX Revolution allows you to have the cache cleared for a single Resource when you save it, without clearing anything else.</p>
+<p>On a large site, MODX's default behavior of clearing the entire cache for all Resources and Elements whenever you save one can really slow things down for your visitors. The CacheMaster Plugin for MODX Revolution allows you to have the cache cleared for a single Resource or Element when you save it, without clearing anything else.</p>
+
+<div class="box">
+    <p>MODX Revolution 2.2.6 will clear the entire cache when you save a Template, regardless of whether the &quot;Empty Cache&quot; checkbox is checked or not and regardless of whether CacheMaster is installed. This may change in future versions of MODX, but really, it doesn't make much sense not to clear the site cache when you change a Template since any cached Resources would be out of date and would show the old layout.</p>
+</div>
 
 <h3>Installing CacheMaster</h3>
 
@@ -13,19 +15,19 @@ when it changes to "Downloaded," click on the "Finish" button. That should bring
 
 <h3>Using CacheMaster</h3>
 
-<p>The default behavior of MODX is to clear the cache for all Resources if the &quot;Empty Cache&quot; checkbox is checked and for no Resources (not even the current one) if the checkbox is not checked. Cachemaster, if the Plugin is enabled, will always clear the cache for the current Resource regardless of whether the
+<p>The default behavior of MODX is to refresh the entire site cache for all Resources and elements if the &quot;Empty Cache&quot; checkbox is checked and for no Resources (not even the current one) if the checkbox is not checked. Cachemaster, if the Plugin is enabled, will always clear the cache for the current object regardless of whether the
 &quot;Empty Cache&quot; checkbox is checked or not.</p>
 
-<p>CacheMaster only executes when you update an existing Resource. It will not do anything at all when you create a new Resource (i.e., MODX will clear the cache normally when you save a newly created Resource, unless you manually uncheck the
+<p>CacheMaster only executes when you update an existing object. It will not do anything at all when you create a new Resource or element (i.e., MODX will clear the cache normally when you save, unless you manually uncheck the
 &quot;Empty Cache&quot;) checkbox.</p>
 
-<p>CacheMaster has only one property: <fixedpre>&uncheckEmptyCache</fixedpre>. The default value of the property is <fixedpre>No</fixedpre>. With that setting, the &quot;Empty Cache&quot; checkbox on the Settings tab will be checked when you edit any Resource (as it is without the Plugin). If you leave the checkbox checked and save the Resource, the cache will be cleared for all Resources. If you uncheck it before saving the Resource, only the cache for the current Resource will be cleared.</p>
+<p>CacheMaster has only one property: <fixedpre>&uncheckEmptyCache</fixedpre>. The default value of the property is <fixedpre>No</fixedpre>. With that setting, the &quot;Empty Cache&quot; checkbox on the Settings tab will be checked when you edit any Resource (as it is without the Plugin). If you leave the checkbox checked and save the Resource, the site cache will be cleared. If you uncheck it before saving the Resource, only the cache for the current object will be cleared.</p>
 
-<p>If <fixedpre>&uncheckEmptyCache</fixedpre> is set to <fixedpre>Yes</fixedpre>, CacheMaster will clear the &quot;Empty Cache&quot; checkbox &mdash; when the Create/Edit Resource panel is loaded. If you leave it unchecked and save the Resource, the cache for the resource will be cleared and the site cache will not. If you do want the site cache cleared, you need to manually check the
+<p>If <fixedpre>&uncheckEmptyCache</fixedpre> is set to <fixedpre>Yes</fixedpre>, CacheMaster will clear the &quot;Empty Cache&quot; checkbox &mdash; when the Create/Edit Resource panel is loaded. If you leave it unchecked and save the object, the cache for the resource or element you are saving will be cleared and the site cache will not. If you do want the site cache cleared, you need to manually check the
 &quot;Empty Cache&quot; checkbox yourself.</p>
 
-<p>To put that all another way, when CacheMaster is enabled, saving a Resource with the &quot;Empty Cache&quot; checkbox checked will always clear the cache for all resources. Saving a Resource with the
-&quot;Empty Cache&quot; checkbox unchecked will always clear the cache just for the current Resource. The &quot;&uncheckEmptyCache&quot; property, if set, just unchecks the
+<p>To put that all another way, when CacheMaster is enabled, saving a Resource or Element with the &quot;Empty Cache&quot; checkbox checked will always clear the entire cache. Saving a Resource or element with the
+&quot;Empty Cache&quot; checkbox unchecked will always clear the cache just for the Resource or Element you are saving. The &quot;&uncheckEmptyCache&quot; property, if set, just unchecks the
 &quot;Empty Cache&quot; checkbox for you as the form is loaded.</p>
 
 <p>To set the <fixedpre>&uncheckEmptyCache</fixedpre> property, edit the Plugin, and set the property on the Properties Tab. Don't forget to save the Plugin. Note that if you change the value to <fixedpre>Yes</fixedpre> it will be set back to <fixedpre>No</fixedpre> if you upgrade CacheMaster. To avoid that, create a property set for the Plugin.</p>
@@ -35,8 +37,12 @@ when it changes to "Downloaded," click on the "Finish" button. That should bring
 
 <h3>Things to Remember</h3>
 
-<p>Failing to clear the site cache will speed up page loads for your site, but if you're not careful, it can leave you with pages that are not up-to-date. If, for example, you change the Menu Title of a page, any cached Wayfinder menus will show the old name until the site cache is cleared. When in doubt, you can always clear the site cache Manually using the Manager's Top Menu.</p>
+<p>Failing to clear the site cache will speed up page loads for your site, but if you're not careful, it can leave you with pages that are not up-to-date. If, for example, you change the Menu Title of a page, any cached Wayfinder menus will show the old name until the site cache is cleared.</p>
 
-<p>CacheMaster will clear the cache for a single Resource if you use the MODX Revolution default cache setup. It is designed to work with other caching strategies, but has not been tested with them.</p>
+<p>Objects in MODX are highly interdependent, and it can be difficult to guess what the effects of not clearing the cache will be. That's why the default behavior in MODX is to refresh the entire cache.</p>
+
+<p>When in doubt, you can always clear the site cache Manually using the Manager's Top Menu.</p>
+
+<p>CacheMaster will clear the cache for a single Resource or Element if you use the MODX Revolution default cache setup. It is designed to work with other caching strategies, but has not been tested with them.</p>
 
 <p>&nbsp;</p>

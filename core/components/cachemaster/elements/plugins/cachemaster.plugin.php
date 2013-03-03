@@ -2,7 +2,7 @@
 /**
  * CacheMaster plugin for CacheMaster extra
  *
- * Copyright 2012 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2013 by Bob Ray <http://bobsguides.com>
  * Created on 12-09-2012
  *
  * CacheMaster is free software; you can redistribute it and/or modify it under the
@@ -37,6 +37,8 @@
 /* @var $modx modX  */
 /* @var $scriptProperties array */
 /* @var $mode int */
+
+$doDebug = false;
 
 if (!function_exists("my_debug")) {
     function my_debug($message, $clear = false)
@@ -118,9 +120,14 @@ switch($event) {
         }
         break;
 }
+ if ($doDebug) {
+     my_debug('CacheMaster Executing', true);
+ }
+/* Handle prerender events */
 
 /* Clear Empty Cache checkbox if UncheckEmptyCache is set */
 if (strstr($event, 'Prerender')) {
+    // my_debug('In Prerender');
     $panel = array(
         'OnDocFormPrerender' => 'modx-resource-syncsite',
         'OnSnipFormPrerender' => 'modx-snippet-clear-cache',
@@ -129,37 +136,43 @@ if (strstr($event, 'Prerender')) {
         'OnTempFormPrerender' => 'modx-template-clear-cache',
         'OnTVFormPrerender' => 'modx-tv-clear-cache',
     );
-    if (!$clearCheckbox) {
+    if ($clearCheckbox) {
         $modx->regClientStartupHTMLBlock('<script type="text/javascript">
             Ext.onReady(function() {
                 Ext.getCmp("' . $panel[$event] . '").setValue(false);
             });
             </script>');
     }
+    return;
 }
 
+/* handle formSave events */
 
+/* Don't execute if Empty Cache is checked */
+$syncsite = (bool) $modx->getOption('syncsite', $_POST, false);
+$emptyCache = (bool)$modx->getOption('clearCache', $_POST, false);
+
+$clearCache = ($syncsite || $emptyCache);
+
+
+if ($clearCache) {
+    /* return and let MODX clear the cache if box is checked */
+    if ($doDebug) {
+        my_debug("Empty cache is checked in " . $event);
+    }
+    return;
+} else {
+    if ($doDebug) {
+        my_debug("Empty cache is NOT checked in " . $event);
+    }
+}
+
+$path = null;
+
+/* Empty Cache is unchecked; clear the individual object cache */
 switch($event) {
-    case 'OnDocFormPrerender':
-        /* If &executeAlways is set, clear the Empty Cache checkbox */
-        if (!empty($scriptProperties['executeAlways'])) {
-/*        $modx->regClientStartupHTMLBlock('<script type="text/javascript">
-            Ext.onReady(function() {
-                Ext.getCmp("modx-resource-syncsite").setValue(false);
-            });
-            </script>');*/
 
-        }
-        break;
-
-    case 'OnBeforeDocFormSave': 
-
-        /* See if empty cache checkbox is checked */
-        $emptyCache = $modx->getOption('syncsite', $_POST, false) == true;
-
-        /* If EmptyCache is set, MODX will clear everything, if not,
-         *  we clear the cache for just this resource */
-        if (! $emptyCache) {
+    case 'OnBeforeDocFormSave':
 
             /* get resource context and id */
             $ctx = $resource->get('context_key');
@@ -182,30 +195,72 @@ switch($event) {
             );
             /* see if resource exists in any other contexts, and if so, clear those caches too */
             $ctxResources = $modx->getCollection('modContextResource', array('resource' => $docId));
-
-            if (!empty ($ctxResources)) {
-                foreach ($ctxResources as $ctxResource) {
-                    /* @var $ctxResource modContextResource */
-                    $key = $ctxResource->get('context_key');
-                    $cKey = str_replace($mgrCtx, $key, $ck);
-                    $modx->cacheManager->delete($cKey, array(
-                        xPDO::OPT_CACHE_KEY => $modx->getOption('cache_resource_key', null, 'resource'),
-                        xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_resource_handler', null,
-                            $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
-                        xPDO::OPT_CACHE_FORMAT => (integer)$modx->getOption('cache_resource_format', null,
-                            $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
-                       )
-                    );
-
-                }
+            if (empty($ctxResources)) {
+                $ctxResources = array('web');
             }
-            /* clear the resource cache the old-fashioned way, just in case */
-            if (file_exists($path)) {
-                unlink($path);
+            foreach ($ctxResources as $ctxResource) {
+                /* @var $ctxResource modContextResource */
+                $key = $ctxResource->get('context_key');
+                $cKey = str_replace($mgrCtx, $key, $ck);
+                $modx->cacheManager->delete($cKey, array(
+                    xPDO::OPT_CACHE_KEY => $modx->getOption('cache_resource_key',
+                        null, 'resource'),
+                    xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_resource_handler', null,
+                        $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
+                    xPDO::OPT_CACHE_FORMAT => (integer)$modx->getOption('cache_resource_format', null,
+                        $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
+                ));
             }
-        }
+
         break;
 
+    case 'OnBeforeSnipFormSave':
+
+        $docId = $snippet->get('id');
+
+        /* set path to default cache file */
+        $path = MODX_CORE_PATH . 'cache/scripts/elements/snippets/' . $docId . '.cache.php';
+
+        $cKey = $snippet->getScriptCacheKey();
+        if ($doDebug) {
+            my_debug('Cache Key: ' . $cKey);
+        }
+        $modx->cacheManager->delete($cKey, array(
+            xPDO::OPT_CACHE_KEY => $modx->getOption('cache_scripts_key', null, 'scripts'),
+            xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_scripts_handler', null,
+                $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
+            xPDO::OPT_CACHE_FORMAT => (integer)$modx->getOption('cache_scripts_format', null,
+            $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
+        ));
+        break;
+
+    case 'OnBeforePluginFormSave':
+        $docId = $plugin->get('id');
+
+        /* set path to default cache file */
+        $path = MODX_CORE_PATH . 'cache/scripts/elements/plugins/' . $docId . '.cache.php';
+
+        $cKey = $plugin->getScriptCacheKey();
+        /*$mgrCtx = $modx->context->get('key');
+        $cKey = str_replace($mgrCtx, $ctx, $ck);*/
+        if ($doDebug) {
+            my_debug('Cache Key: ' . $cKey);
+        }
+        $modx->cacheManager->delete($cKey, array(
+            xPDO::OPT_CACHE_KEY=>$modx->getOption('cache_scripts_key', null, 'scripts'),
+            xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_scripts_handler', null,
+                $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
+            xPDO::OPT_CACHE_FORMAT=>(integer)$modx->getOption('cache_scripts_format', null,
+            $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
+        ));
+
+        break;
 }
+
+/* clear the cache the old-fashioned way, just in case */
+if ($path && file_exists($path)) {
+    unlink($path);
+}
+
 
 return '';
