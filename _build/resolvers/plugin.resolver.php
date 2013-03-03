@@ -2,8 +2,8 @@
 /**
 * Resolver to connect plugins to system events for CacheMaster extra
 *
-* Copyright 2012 by Bob Ray <http://bobsguides.com>
-* Created on 01-04-2013
+* Copyright 2012-2013 by Bob Ray <http://bobsguides.com>
+* Created on 03-03-2013
 *
  * CacheMaster is free software; you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software
