@@ -1,36 +1,56 @@
 <h3>Overview</h3>
 <p>On a large site, MODX's default behavior of clearing the entire cache for all Resources and Elements whenever you save one can really slow things down for your visitors. The CacheMaster Plugin for MODX Revolution allows you to have the cache cleared for a single Resource or Element when you save it, without clearing anything else.</p>
 
+<p>(Jump to <a href="[[~[[*id]]]]#propertiesTable">Properties Table</a>.)</p>
+
 <div class="box">
-    <p>MODX Revolution 2.2.6 will clear the entire cache when you save a Template, regardless of whether the &quot;Empty Cache&quot; checkbox is checked or not and regardless of whether CacheMaster is installed. This may change in future versions of MODX, but really, it doesn't make much sense not to clear the site cache when you change a Template since any cached Resources would be out of date and would show the old layout.</p>
+    <p>MODX Revolution 2.2.6 will clear the entire cache when you save a Template, regardless of whether the &quot;Empty Cache&quot; checkbox is checked or not and regardless of whether CacheMaster is installed. This may change in future versions of MODX, but in practice, it doesn't make much sense not to clear the site cache when you change a Template since any cached Resources would be out of date and would show the old layout.</p>
 </div>
 
 <h3>Installing CacheMaster</h3>
 
 <p>
-Go to System | Package Management on the main menu in the MODX Manager and click on the "Download Extras" button. That will take you to the
-Revolution Repository (AKA Web Transport Facility). Put CacheMaster in the search box and press Enter. Click on the "Download" button, and
-when it changes to "Downloaded," click on the "Finish" button. That should bring you back to your Package Management grid. Click on the
+Go to System | Package Management on the main menu in the MODX Manager and click on the "Download Extras" button. That will take you to the Revolution Repository (AKA Web Transport Facility). Put CacheMaster in the search box and press Enter.
+Click on the &quot;Download&quot; button, and once the package is downloaded,
+click on the &quot;Back to Package Manager&quot; button. That should bring you back to your Package Management grid. Click on the
 "Install" button next to CacheMaster in the grid. The CacheMaster package should now be installed.</p>
 
 <h3>Using CacheMaster</h3>
 
-<p>The default behavior of MODX is to refresh the entire site cache for all Resources and elements if the &quot;Empty Cache&quot; checkbox is checked and for no Resources (not even the current one) if the checkbox is not checked. Cachemaster, if the Plugin is enabled, will always clear the cache for the current object regardless of whether the
-&quot;Empty Cache&quot; checkbox is checked or not.</p>
+<p>The default behavior of MODX is to refresh the entire site cache for all Resources and Elements if the &quot;Empty Cache&quot; checkbox is checked and for no Resources  or Elements (not even the current one) if the checkbox is not checked. Cachemaster, if the Plugin is enabled, will always clear the cache for any objects selected in the CacheMaster properties regardless of whether the &quot;Empty Cache&quot; checkbox is checked or not.</p>
 
-<p>CacheMaster only executes when you update an existing object. It will not do anything at all when you create a new Resource or element (i.e., MODX will clear the cache normally when you save, unless you manually uncheck the
-&quot;Empty Cache&quot;) checkbox.</p>
+<div class="box">
+    <p>As of CacheMaster 1.1.0, you have the option to use CacheMaster for Elements in addition to Resources. By default, CacheMaster only executes with Resources. To use it with Elements, set the plugin's default properties or use a Property Set (see below).</p>
+</div>
 
-<p>CacheMaster has only one property: <fixedpre>&uncheckEmptyCache</fixedpre>. The default value of the property is <fixedpre>No</fixedpre>. With that setting, the &quot;Empty Cache&quot; checkbox on the Settings tab will be checked when you edit any Resource (as it is without the Plugin). If you leave the checkbox checked and save the Resource, the site cache will be cleared. If you uncheck it before saving the Resource, only the cache for the current object will be cleared.</p>
+<p>CacheMaster only executes when you update an existing object. It will not do anything at all when you create a new Resource or Element
+(i.e., MODX will clear the cache normally when you save, unless you manually uncheck the &quot;Empty Cache&quot;) checkbox.</p>
 
-<p>If <fixedpre>&uncheckEmptyCache</fixedpre> is set to <fixedpre>Yes</fixedpre>, CacheMaster will clear the &quot;Empty Cache&quot; checkbox &mdash; when the Create/Edit Resource panel is loaded. If you leave it unchecked and save the object, the cache for the resource or element you are saving will be cleared and the site cache will not. If you do want the site cache cleared, you need to manually check the
-&quot;Empty Cache&quot; checkbox yourself.</p>
 
-<p>To put that all another way, when CacheMaster is enabled, saving a Resource or Element with the &quot;Empty Cache&quot; checkbox checked will always clear the entire cache. Saving a Resource or element with the
-&quot;Empty Cache&quot; checkbox unchecked will always clear the cache just for the Resource or Element you are saving. The &quot;&uncheckEmptyCache&quot; property, if set, just unchecks the
-&quot;Empty Cache&quot; checkbox for you as the form is loaded.</p>
+<p>CacheMaster has six properties that determine which Elements it operates on and whether it operates on Resources (see table below). In addition to those properties it has the <fixedpre>&uncheckEmptyCache</fixedpre>, property, which controls the &quot;Empty Cache&quot; checkbox on the Create/Edit panel for Resources and Elements.<p>
 
-<p>To set the <fixedpre>&uncheckEmptyCache</fixedpre> property, edit the Plugin, and set the property on the Properties Tab. Don't forget to save the Plugin. Note that if you change the value to <fixedpre>Yes</fixedpre> it will be set back to <fixedpre>No</fixedpre> if you upgrade CacheMaster. To avoid that, create a property set for the Plugin.</p>
+<p>If none of the first six properties is selected, CacheMaster will do nothing (this is equivalent to disabling the plugin). By default, only Resources are selected.</p>
+
+<p> In addition to the selection properties, CacheMaster also has the <fixedpre>&uncheckEmptyCache</fixedpre> property. The default value of the property is <fixedpre>Yes</fixedpre>. With that setting, the &quot;Empty Cache&quot; checkbox on the Settings tab will be unchecked when you edit any objects selected by the other properties. If you check the checkbox before saving the Resource or Element, the whole site cache will be cleared (as it would be if the plugin were not installed.) If you leave it unchecked, only the cache for the current object will be cleared. The site cache will not be cleared (except when saving Templates &mdash; see the note above about Templates).</p>
+
+<p>If <fixedpre>&uncheckEmptyCache</fixedpre> is set to <fixedpre>No</fixedpre>, CacheMaster will not uncheck the &quot;Empty Cache&quot; checkbox &mdash; when the Create/Edit panel is loaded, but it will still clear the individual object cache for selected objects if you uncheck the box before saving.</p>
+
+<p>To put that all another way, when CacheMaster is enabled, saving a Resource or Element with the &quot;Empty Cache&quot; checkbox checked will always clear the entire cache. Saving a Resource or Element with the
+&quot;Empty Cache&quot; checkbox unchecked will always clear the cache for the Resource or Element you are saving <i>but only for objects selected with the other properties</i>. The &quot;&uncheckEmptyCache&quot; property, if set, just unchecks the
+&quot;Empty Cache&quot; checkbox for you with any selected objects as the form is loaded in the Manager.</p>
+
+<h3>Two Ways to Use CacheMaster</h3>
+
+<p>The options described above give you two basic ways to use the plugin, depending on the value of the <fixedpre>&uncheckEmptyCache</fixedpre> property. Remember that without the plugin, MODX clears the whole site cache if the
+&quot;Empty Cache&quot; checkbox is checked. If the checkbox is not checked, MODX doesn't touch the cache at all. The old version of the object remains in the cache.</p>
+
+<p>With CacheMaster installed, and the <fixedpre>&uncheckEmptyCache</fixedpre> set to <fixedpre>No</fixedpre>, MODX will clear the whole cache if you leave the checkbox checked. If you uncheck it before saving, however, CacheMaster will clear the cache for the object you are saving <i>if you have selected it with one of the other properties</i>. This means that if you select all the objects in the CacheMaster properties, you can uncheck the checkbox yourself and the cache for the object you are saving will always be cleared.</p>
+
+<p>With CacheMaster installed, and the <fixedpre>&uncheckEmptyCache</fixedpre> set to
+<fixedpre>Yes</fixedpre>, the behavior is exactly the same as just described, except that the checkbox is unchecked for you when the Create/Edit panel for any selected object is loaded.</p>
+
+<h3>Setting the CacheMaster Properties</h3>
+<p>To set the CacheMaster properties, edit the Plugin, and set the properties on the Properties Tab. Don't forget to save the Plugin. Note that if you change the values of any properties, they will be set back to their defaults if you upgrade CacheMaster. To avoid that, create a property set for the Plugin.</p>
 
 [[$CreatePluginPropertySet? &pluginName=`CacheMaster`]]
 
@@ -41,8 +61,56 @@ when it changes to "Downloaded," click on the "Finish" button. That should bring
 
 <p>Objects in MODX are highly interdependent, and it can be difficult to guess what the effects of not clearing the cache will be. That's why the default behavior in MODX is to refresh the entire cache.</p>
 
-<p>When in doubt, you can always clear the site cache Manually using the Manager's Top Menu.</p>
+<p>When in doubt, you can always clear the entire site cache Manually using the Manager's Top Menu.</p>
 
 <p>CacheMaster will clear the cache for a single Resource or Element if you use the MODX Revolution default cache setup. It is designed to work with other caching strategies, but has not been tested with them.</p>
+
+<a name="propertiesTable"></a>
+
+<h3>CacheMaster Properties</h3>
+
+<table class="properties">
+    <tr>
+        <th>Property</th>
+        <th>Description</th>
+        <th>Default</th>
+    </tr>
+
+    <tr>
+        <td>doChunks</td>
+        <td>Execute for Chunks</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>doPlugins</td>
+        <td>Execute for Plugins</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>doResources</td>
+        <td>Execute for Resources</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>doSnippets</td>
+        <td>Execute for Snippets</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>doTVs</td>
+        <td>Execute for Template Variables</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>doTemplates</td>
+        <td>Execute for Templates</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>uncheckEmptyCache</td>
+        <td>If set to Yes, unchecks the Empty Cache checkbox when the Create/Edit Resource or Element panel is loaded (only for objects selected by other properties here)</td>
+        <td>Yes</td>
+    </tr>
+</table>
 
 <p>&nbsp;</p>
