@@ -37,4 +37,10 @@
 
 
 /* Used in properties.cachemaster.plugin.php */
-$_lang['cm_uncheck_empty_cache_desc'] = 'If set to Yes, unchecks the Empty Cache checkbox when the Create/Edit Resource panel is loaded; Default: No';
+$_lang['cm_do_chunks_desc'] = 'Execute for Chunks; Default: No';
+$_lang['cm_do_plugins_desc'] = 'Execute for Plugins; Default: No';
+$_lang['cm_do_resources_desc'] = 'Execute for Resources; Default: Yes';
+$_lang['cm_do_snippets_desc'] = 'Execute for Snippets; Default: No';
+$_lang['cm_do_tvs_desc'] = 'Execute for Template Variables; Default: No';
+$_lang['cm_do_templates_desc'] = 'Execute for Templates; Default: No';
+$_lang['cm_uncheck_empty_cache_desc'] = 'Uncheck "Empty Cache" checkbox; Only does this for objects selected by the other properties here; default: Yes';
