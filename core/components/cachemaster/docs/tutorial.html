@@ -1,6 +1,8 @@
 <h3>Overview</h3>
 <p>On a large site, MODX's default behavior of clearing the entire cache for all Resources and Elements whenever you save one can really slow things down for your visitors. The CacheMaster Plugin for MODX Revolution allows you to have the cache cleared for a single Resource or Element when you save it, without clearing anything else.</p>
 
+<p>CacheMaster will also allow you to have the &quot;Empty Cache&quot; checkbox unchecked by default for Resources and/or selected elements.</p>
+
 <p>(Jump to <a href="[[~[[*id]]]]#propertiesTable">Properties Table</a>.)</p>
 
 <div class="box">
@@ -17,14 +19,13 @@ click on the &quot;Back to Package Manager&quot; button. That should bring you b
 
 <h3>Using CacheMaster</h3>
 
-<p>The default behavior of MODX is to refresh the entire site cache for all Resources and Elements if the &quot;Empty Cache&quot; checkbox is checked and for no Resources  or Elements (not even the current one) if the checkbox is not checked. Cachemaster, if the Plugin is enabled, will always clear the cache for any objects selected in the CacheMaster properties regardless of whether the &quot;Empty Cache&quot; checkbox is checked or not.</p>
+<p>The default behavior of MODX is to refresh the entire site cache for all Resources and Elements if the &quot;Empty Cache&quot; checkbox is checked and for no Resources or Elements (not even the current one) if the checkbox is not checked. Cachemaster, if the Plugin is enabled, will always clear the cache for the object you are saving if its type is selected in the CacheMaster properties, regardless of whether the &quot;Empty Cache&quot; checkbox is checked or not.</p>
 
 <div class="box">
     <p>As of CacheMaster 1.1.0, you have the option to use CacheMaster for Elements in addition to Resources. By default, CacheMaster only executes with Resources. To use it with Elements, set the plugin's default properties or use a Property Set (see below).</p>
 </div>
 
-<p>CacheMaster only executes when you update an existing object. It will not do anything at all when you create a new Resource or Element
-(i.e., MODX will clear the whole site cache normally when you save, unless you manually uncheck the &quot;Empty Cache&quot;) checkbox.</p>
+<p>CacheMaster only executes when you update an existing object. It will not do anything at all when you create a new Resource or Element (i.e., MODX will refresh the whole site cache normally when you save, unless you manually uncheck the &quot;Empty Cache&quot;) checkbox.</p>
 
 
 <p>CacheMaster has six properties that determine which Elements it operates on and whether it operates on Resources (see table below). In addition to those properties it has the <fixedpre>&uncheckEmptyCache</fixedpre>, property, which controls the &quot;Empty Cache&quot; checkbox on the Create/Edit panel for Resources and Elements.<p>
@@ -41,7 +42,7 @@ click on the &quot;Back to Package Manager&quot; button. That should bring you b
 
 <h3>Two Ways to Use CacheMaster</h3>
 
-<p>The options described above give you two basic ways to use the plugin, depending on the value of the <fixedpre>&uncheckEmptyCache</fixedpre> property. Remember that without the plugin, MODX clears the whole site cache if the
+<p>The options described above give you two basic ways to use the plugin, depending on the value of the <fixedpre>&uncheckEmptyCache</fixedpre> property. Remember that without the plugin, MODX refreshes the whole site cache if the
 &quot;Empty Cache&quot; checkbox is checked. If the checkbox is not checked, MODX doesn't touch the cache at all. The old version of the object remains in the cache.</p>
 
 <p>With CacheMaster installed, and the <fixedpre>&uncheckEmptyCache</fixedpre> set to <fixedpre>No</fixedpre>, MODX will clear the whole cache if you leave the checkbox checked. If you uncheck it before saving, however, CacheMaster will clear the cache for the object you are saving <i>if you have selected it with one of the other properties</i>. This means that if you select all the objects in the CacheMaster properties, you can uncheck the checkbox yourself and the cache for the object you are saving will always be cleared.</p>
