@@ -1,8 +1,8 @@
 <?php
 /**
- * CacheMaster plugin for CacheMaster extra
- *
- * Copyright 2012-2013 by Bob Ray <http://bobsguides.com>
+* CacheMaster plugin for CacheMaster extra
+*
+* Copyright 2012-2013 by Bob Ray <http://bobsguides.com>
  * Created on 12-09-2012
  *
  * CacheMaster is free software; you can redistribute it and/or modify it under the
@@ -134,13 +134,15 @@ switch($event) {
         break;
 }
  if ($doDebug) {
-     my_debug('CacheMaster Executing', true);
+     my_debug('CacheMaster Executing');
  }
 /* Handle prerender events */
 
 /* Clear Empty Cache checkbox if UncheckEmptyCache is set */
 if (strstr($event, 'Prerender')) {
-    // my_debug('In Prerender');
+    if ($doDebug) {
+        my_debug('In Prerender');
+    }
     $panel = array(
         'OnDocFormPrerender' => 'modx-resource-syncsite',
         'OnSnipFormPrerender' => 'modx-snippet-clear-cache',
@@ -151,10 +153,10 @@ if (strstr($event, 'Prerender')) {
     );
     if ($clearCheckbox) {
         $modx->regClientStartupHTMLBlock('<script type="text/javascript">
-            Ext.onReady(function() {
-                Ext.getCmp("' . $panel[$event] . '").setValue(false);
-            });
-            </script>');
+    Ext.onReady(function () {
+        Ext.getCmp("' . $panel[$event] . '").setValue(false);
+    });
+</script>');
     }
     return;
 }
@@ -166,6 +168,10 @@ $syncsite = (bool) $modx->getOption('syncsite', $_POST, false);
 $emptyCache = (bool)$modx->getOption('clearCache', $_POST, false);
 
 $clearCache = ($syncsite || $emptyCache);
+
+if ($doDebug) {
+   my_debug('In FormSave');
+}
 
 
 if ($clearCache) {
@@ -186,6 +192,10 @@ $path = null;
 switch($event) {
 
     case 'OnBeforeDocFormSave':
+        if ($doDebug) {
+            my_debug("In OnBeforeDocFormSave");
+        }
+
 
             /* get resource context and id */
             $ctx = $resource->get('context_key');
@@ -206,24 +216,6 @@ switch($event) {
                     $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
                 )
             );
-            /* see if resource exists in any other contexts, and if so, clear those caches too */
-            $ctxResources = $modx->getCollection('modContextResource', array('resource' => $docId));
-            if (empty($ctxResources)) {
-                $ctxResources = array('web');
-            }
-            foreach ($ctxResources as $ctxResource) {
-                /* @var $ctxResource modContextResource */
-                $key = $ctxResource->get('context_key');
-                $cKey = str_replace($mgrCtx, $key, $ck);
-                $modx->cacheManager->delete($cKey, array(
-                    xPDO::OPT_CACHE_KEY => $modx->getOption('cache_resource_key',
-                        null, 'resource'),
-                    xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_resource_handler', null,
-                        $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
-                    xPDO::OPT_CACHE_FORMAT => (integer)$modx->getOption('cache_resource_format', null,
-                        $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
-                ));
-            }
 
         break;
 
