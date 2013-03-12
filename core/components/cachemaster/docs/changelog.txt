@@ -1,7 +1,8 @@
 Changelog for CacheMaster
 
-CacheMaster 1.1.0
+CacheMaster 1.1.1-pl
 ---------------------------------
+Fixed conflict with MODX 2.2.6
 Now works with both Resources and Elements (except Templates)
 Better sanity checks
 
