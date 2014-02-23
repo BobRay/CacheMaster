@@ -216,6 +216,15 @@ switch($event) {
                     $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
                 )
             );
+        /* If pub_date or unpub_date are set, update the auto_publish cache */
+        if ($resource->get('pub_date') || $resource->get('unpub_date')) {
+            $providers = array(
+                'auto_publish' => array('contexts' => $ctx),
+            );
+            $cm->refresh($providers);
+
+        }
+
 
         break;
 
