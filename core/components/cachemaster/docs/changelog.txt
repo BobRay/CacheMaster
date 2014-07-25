@@ -1,10 +1,15 @@
 Changelog for CacheMaster
 
 
-CacheMaster 1.2.0-pl
+CacheMaster 1.2.1-pl
 ---------------------------------
 Update for MODX 2.3
 Plugin disabled on install
+Fix bug with refresh
+
+
+CacheMaster 1.2.0-pl
+---------------------------------
 Update MODX constants
 Clear AutoPublish cache if pub_date or unpub_date are set
 
