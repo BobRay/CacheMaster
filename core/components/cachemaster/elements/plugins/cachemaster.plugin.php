@@ -221,7 +221,7 @@ switch($event) {
             $providers = array(
                 'auto_publish' => array('contexts' => $ctx),
             );
-            $cm->refresh($providers);
+            $modx->cacheManager->refresh($providers);
 
         }
 
