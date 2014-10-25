@@ -1,5 +1,9 @@
 Changelog for CacheMaster
 
+CacheMaster 1.2.2-pl
+---------------------------------
+Clear checkbox in Articles
+
 
 CacheMaster 1.2.1-pl
 ---------------------------------
