@@ -157,6 +157,14 @@ if (strstr($event, 'Prerender')) {
         Ext.getCmp("' . $panel[$event] . '").setValue(false);
     });
 </script>');
+
+        // Clear Checkbox for Articles
+    if ($event == 'OnDocFormPrerender' && $resource->get('class_key') == 'Article')
+        $modx->regClientStartupHTMLBlock('<script type="text/javascript">
+            Ext.onReady(function () {
+                Ext.getCmp("' . 'modx-resource-clearcache' . '").setValue(false);
+            });
+        </script>');
     }
     return;
 }
