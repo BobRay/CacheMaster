@@ -18,7 +18,9 @@ $properties = array (
     'name' => 'doChunks',
     'desc' => 'cm_do_chunks_desc',
     'type' => 'combo-boolean',
-    'options' => '',
+    'options' => 
+    array (
+    ),
     'value' => '',
     'lexicon' => 'cachemaster:properties',
     'area' => 'CacheMaster',
@@ -28,8 +30,10 @@ $properties = array (
     'name' => 'doPlugins',
     'desc' => 'cm_do_plugins_desc',
     'type' => 'combo-boolean',
-    'options' => '',
-    'value' => '',
+    'options' => 
+    array (
+    ),
+    'value' => false,
     'lexicon' => 'cachemaster:properties',
     'area' => 'CacheMaster',
   ),
@@ -38,7 +42,9 @@ $properties = array (
     'name' => 'doResources',
     'desc' => 'cm_do_resources_desc',
     'type' => 'combo-boolean',
-    'options' => '',
+    'options' => 
+    array (
+    ),
     'value' => true,
     'lexicon' => 'cachemaster:properties',
     'area' => 'CacheMaster',
@@ -48,7 +54,9 @@ $properties = array (
     'name' => 'doSnippets',
     'desc' => 'cm_do_snippets_desc',
     'type' => 'combo-boolean',
-    'options' => '',
+    'options' => 
+    array (
+    ),
     'value' => '',
     'lexicon' => 'cachemaster:properties',
     'area' => 'CacheMaster',
@@ -58,7 +66,9 @@ $properties = array (
     'name' => 'doTVs',
     'desc' => 'cm_do_tvs_desc',
     'type' => 'combo-boolean',
-    'options' => '',
+    'options' => 
+    array (
+    ),
     'value' => '',
     'lexicon' => 'cachemaster:properties',
     'area' => 'CacheMaster',
@@ -68,7 +78,9 @@ $properties = array (
     'name' => 'doTemplates',
     'desc' => 'cm_do_templates_desc',
     'type' => 'combo-boolean',
-    'options' => '',
+    'options' => 
+    array (
+    ),
     'value' => '',
     'lexicon' => 'cachemaster:properties',
     'area' => 'CacheMaster',
@@ -78,7 +90,9 @@ $properties = array (
     'name' => 'uncheckEmptyCache',
     'desc' => 'cm_uncheck_empty_cache_desc',
     'type' => 'combo-boolean',
-    'options' => '',
+    'options' => 
+    array (
+    ),
     'value' => true,
     'lexicon' => 'cachemaster:properties',
     'area' => 'CacheMaster',
