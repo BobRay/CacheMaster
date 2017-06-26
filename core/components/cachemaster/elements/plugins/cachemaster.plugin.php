@@ -47,9 +47,12 @@
  */
 
 
-/* @var $modx modX  */
-/* @var $scriptProperties array */
-/* @var $mode int */
+/**
+    @var $modx modX
+    @var $resource modResource
+    @var $scriptProperties array
+    @var $mode int
+*/
 
 $doDebug = false;
 
@@ -93,11 +96,17 @@ $doTemplates = (bool) $modx->getOption('doTemplates', $sp, false);
 $doTVs = (bool) $modx->getOption('doTVs', $sp, false);
 $clearCheckbox = (bool) $modx->getOption('uncheckEmptyCache', $sp, false);
 
+/**  @var $resource modResource */
 
 /* Bail out if we're not doing this object */
 switch($event) {
-    case 'OnDocFormPrerender':
     case 'OnBeforeDocFormSave':
+        /* No longer using this event */
+        return;
+
+    case 'OnDocFormPrerender':
+
+    case 'OnDocFormSave':
         if (!$doResources) {
             return;
         }
@@ -199,9 +208,10 @@ $path = null;
 /* Empty Cache is unchecked; clear the individual object cache */
 switch($event) {
 
-    case 'OnBeforeDocFormSave':
+    case 'OnDocFormSave':
+
         if ($doDebug) {
-            my_debug("In OnBeforeDocFormSave");
+            my_debug("In OnDocFormSave");
         }
 
 
@@ -230,14 +240,13 @@ switch($event) {
                 'auto_publish' => array('contexts' => $ctx),
             );
             $modx->cacheManager->refresh($providers);
-
         }
 
 
         break;
 
     case 'OnBeforeSnipFormSave':
-
+        /** @var $snippet modSnippet */
         $docId = $snippet->get('id');
 
         /* set path to default cache file */
