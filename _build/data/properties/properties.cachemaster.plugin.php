@@ -2,7 +2,7 @@
 /**
  * Properties file for CacheMaster plugin
  *
- * Copyright 2012-2014 by Bob Ray <http://bobsguides.com>
+ * Copyright 2012-2017 by Bob Ray <https://bobsguides.com>
  * Created on 03-03-2013
  *
  * @package cachemaster

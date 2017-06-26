@@ -10,11 +10,11 @@ $components = array(
     'version' => '1.0.0',
     'release' => 'beta1',
     'author' => 'Bob Ray',
-    'email' => '<http://bobsguides.com>',
-    'authorUrl' => 'http://bobsguides.com',
+    'email' => '<https://bobsguides.com>',
+    'authorUrl' => 'https://bobsguides.com',
     'authorSiteName' => "Bob's Guides",
-    'packageDocumentationUrl' => 'http://bobsguides.com/example-tutorial.html',
-    'copyright' => '2012',
+    'packageDocumentationUrl' => 'https://bobsguides.com/example-tutorial.html',
+    'copyright' => '2012-2017',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),
@@ -530,4 +530,5 @@ $components = array(
 
     /* ******************** LEXICON HELPER SETTINGS ***************** */
     /* These settings are used by LexiconHelper */
-    'rewriteCodeFiles' => false,  /* remove 
+    'rewriteCodeFiles' => false,
+);
