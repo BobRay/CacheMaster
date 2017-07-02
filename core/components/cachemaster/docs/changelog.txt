@@ -1,5 +1,11 @@
 Changelog for CacheMaster
 
+CacheMaster 1.2.3-pl
+---------------------------------
+Fix issue with auto_publish (thanks to ttyiav)
+Improve error messages during install
+Install plugin enabled
+
 CacheMaster 1.2.2-pl
 ---------------------------------
 Clear checkbox in Articles

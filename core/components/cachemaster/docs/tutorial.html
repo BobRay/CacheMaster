@@ -18,6 +18,11 @@ Click on the &quot;Download&quot; button, and once the package is downloaded,
 click on the &quot;Back to Package Manager&quot; button. That should bring you back to your Package Management grid. Click on the
 "Install" button next to CacheMaster in the grid. The CacheMaster package should now be installed.</p>
 
+<div class="box">
+<p>Version 1.2.3 fixed an issue with publish dates by switching the event it's attached to from <code>OnBeforeDocFormSave</code> to <code>OnDocFormSave</code> (thanks to MODX user ttyiav for identifying the bug and suggesting the solution). If you are upgrading from an earlier version, since <code>OnBeforeDocFormSave</code> is no longer used, you can speed up the Manager by a very tiny amount by unchecking the <code>OnBeforeDocFormSave</code> event on the System Events tab when editing the CacheMaster plugin and saving the plugin.</p>
+
+</div>
+
 <h3>Using CacheMaster</h3>
 
 <p>The default behavior of MODX is to refresh the entire site cache for all Resources and Elements if the &quot;Empty Cache&quot; checkbox is checked and for no Resources or Elements (not even the current one) if the checkbox is not checked. Cachemaster, if the Plugin is enabled, will always clear the cache for the object you are saving if its type is selected in the CacheMaster properties, regardless of whether the &quot;Empty Cache&quot; checkbox is checked or not.</p>
