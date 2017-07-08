@@ -2,7 +2,7 @@
 /**
  * plugins transport file for CacheMaster extra
  *
- * Copyright 2012-2017 by Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2017 Bob Ray <https://bobsguides.com>
  * Created on 03-03-2013
  *
  * @package cachemaster
