@@ -2,7 +2,7 @@
 /**
 * Resolver to connect plugins to system events for CacheMaster extra
 *
-* Copyright 2012-2017 Bob Ray <https://bobsguides.com>
+* Copyright 2012-2018 by Bob Ray <https://bobsguides.com>
 * Created on 03-03-2013
 *
  * CacheMaster is free software; you can redistribute it and/or modify it under the
@@ -77,65 +77,71 @@ if ($object->xpdo) {
                 ),
                 1 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnBeforePluginFormSave',
+                  'event' => 'OnBeforeDocFormSave',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 2 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnBeforeSnipFormSave',
+                  'event' => 'OnBeforePluginFormSave',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 3 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnBeforeTempFormSave',
+                  'event' => 'OnBeforeSnipFormSave',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 4 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnBeforeTVFormSave',
+                  'event' => 'OnBeforeTempFormSave',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 5 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnChunkFormPrerender',
+                  'event' => 'OnBeforeTVFormSave',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 6 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnDocFormPrerender',
+                  'event' => 'OnChunkFormPrerender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 7 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnDocFormSave',
+                  'event' => 'OnDocFormPrerender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 8 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnPluginFormPrerender',
+                  'event' => 'OnDocFormSave',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 9 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnSnipFormPrerender',
+                  'event' => 'OnPluginFormPrerender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 10 =>  array (
                   'pluginid' => 'CacheMaster',
-                  'event' => 'OnTempFormPrerender',
+                  'event' => 'OnSnipFormPrerender',
                   'priority' => '0',
                   'propertyset' => '0',
                 ),
                 11 =>  array (
+                  'pluginid' => 'CacheMaster',
+                  'event' => 'OnTempFormPrerender',
+                  'priority' => '0',
+                  'propertyset' => '0',
+                ),
+                12 =>  array (
                   'pluginid' => 'CacheMaster',
                   'event' => 'OnTVFormPrerender',
                   'priority' => '0',
