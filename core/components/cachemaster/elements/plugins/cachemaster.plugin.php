@@ -95,6 +95,7 @@ $doChunks = (bool) $modx->getOption('doChunks', $sp, false);
 $doTemplates = (bool) $modx->getOption('doTemplates', $sp, false);
 $doTVs = (bool) $modx->getOption('doTVs', $sp, false);
 $clearCheckbox = (bool) $modx->getOption('uncheckEmptyCache', $sp, false);
+$cm = $modx->getCacheManager();
 
 /**  @var $resource modResource */
 
@@ -219,6 +220,7 @@ switch($event) {
             $ctx = $resource->get('context_key');
             $docId = $resource->get('id');
 
+
             /* set path to default cache file */
             $path = MODX_CORE_PATH . 'cache/resource/' . $ctx . '/resources/' . $docId . '.cache.php';
 
@@ -226,7 +228,7 @@ switch($event) {
             $mgrCtx = $modx->context->get('key');
             $cKey = str_replace($mgrCtx, $ctx, $ck);
 
-            $modx->cacheManager->delete($cKey, array(
+            $cm->delete($cKey, array(
                 xPDO::OPT_CACHE_KEY => $modx->getOption('cache_resource_key', null, 'resource'),
                 xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_resource_handler', null,
                     $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
@@ -234,14 +236,11 @@ switch($event) {
                     $modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP))
                 )
             );
-        /* If pub_date or unpub_date are set, update the auto_publish cache */
-        if ($resource->get('pub_date') || $resource->get('unpub_date')) {
+        /* Update the auto_publish cache */
             $providers = array(
                 'auto_publish' => array('contexts' => $ctx),
             );
-            $modx->cacheManager->refresh($providers);
-        }
-
+            $cm->refresh($providers);
 
         break;
 
@@ -256,7 +255,7 @@ switch($event) {
         if ($doDebug) {
             my_debug('Cache Key: ' . $cKey);
         }
-        $modx->cacheManager->delete($cKey, array(
+        $cm->delete($cKey, array(
             xPDO::OPT_CACHE_KEY => $modx->getOption('cache_scripts_key', null, 'scripts'),
             xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_scripts_handler', null,
                 $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
@@ -277,7 +276,7 @@ switch($event) {
         if ($doDebug) {
             my_debug('Cache Key: ' . $cKey);
         }
-        $modx->cacheManager->delete($cKey, array(
+        $cm->delete($cKey, array(
             xPDO::OPT_CACHE_KEY=>$modx->getOption('cache_scripts_key', null, 'scripts'),
             xPDO::OPT_CACHE_HANDLER => $modx->getOption('cache_scripts_handler', null,
                 $modx->getOption(xPDO::OPT_CACHE_HANDLER)),
