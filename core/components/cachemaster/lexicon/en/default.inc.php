@@ -2,7 +2,7 @@
 /**
  * en default topic lexicon file for CacheMaster extra
  *
- * Copyright 2012-2018 Bob Ray <https://bobsguides.com>
+ * Copyright 2012-2019 Bob Ray <https://bobsguides.com>
  * Created on 12-09-2012
  *
  * CacheMaster is free software; you can redistribute it and/or modify it under the
