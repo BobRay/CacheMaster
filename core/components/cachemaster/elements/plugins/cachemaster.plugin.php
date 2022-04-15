@@ -60,13 +60,16 @@ if (!function_exists("my_debug")) {
     function my_debug($message, $clear = false)
     {
         global $modx;
+        $prefix = $modx->getVersionData()['version'] >= 3
+                ? 'MODX\Revolution\\'
+                : '';
         $content = '';
-        $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
+        $chunk = $modx->getObject($prefix . 'modChunk', array('name' => 'Debug'));
         if (!$chunk) {
-            $chunk = $modx->newObject('modChunk', array('name' => 'Debug'));
+            $chunk = $modx->newObject($prefix . 'modChunk', array('name' => 'Debug'));
             $chunk->setContent('');
             $chunk->save();
-            $chunk = $modx->getObject('modChunk', array('name' => 'Debug'));
+            $chunk = $modx->getObject($prefix . 'modChunk', array('name' => 'Debug'));
         } else {
             if ($clear) {
                 $content = '';
@@ -265,6 +268,7 @@ switch($event) {
         break;
 
     case 'OnBeforePluginFormSave':
+        /** @var $plugin modPlugin */
         $docId = $plugin->get('id');
 
         /* set path to default cache file */
