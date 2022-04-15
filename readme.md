@@ -7,6 +7,6 @@ CacheMaster Extra for MODx Revolution
 
 **Bugs and requests:** [CacheMaster Issues](https://github.com/BobRay/CacheMaster/issues)
 
-**Questions about using CacheMaster** [MODx Forums](https://forums.modx.com)
+**Questions about using CacheMaster** [MODx Forums](https://community.modx.com)
 
 CacheMaster speeds up page-loads at your site by allowing you to clear the site cache for a single Resource or Element when you save it in the Manager, rather than the whole site cache.

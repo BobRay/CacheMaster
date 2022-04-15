@@ -1,42 +1,46 @@
 Changelog for CacheMaster
 
+CacheMaster 1.3.0-pl
+---------------------------------
+ - Updates for MODX 3 -- fully compatible
+ - Update Copyrights
+
 CacheMaster 1.2.4-pl
 ---------------------------------
-Always refresh auto_publish cache
-Update copyrights
-Fix issue with auto_publish (thanks to ttyiav)
-Improve error messages during install
-Install plugin enabled
+ - Always refresh auto_publish cache
+ - Update copyrights
+ - Fix issue with auto_publish (thanks to ttyiav)
+ - Improve error messages during install
+ - Install plugin enabled
 
 CacheMaster 1.2.2-pl
 ---------------------------------
-Clear checkbox in Articles
+ - Clear checkbox in Articles
 
 
 CacheMaster 1.2.1-pl
 ---------------------------------
-Update for MODX 2.3
-Plugin disabled on install
-Fix bug with refresh
-
+ - Update for MODX 2.3
+ - Plugin disabled on install
+ - Fix bug with refresh
 
 CacheMaster 1.2.0-pl
 ---------------------------------
-Update MODX constants
-Clear AutoPublish cache if pub_date or unpub_date are set
+ - Update MODX constants
+ - Clear AutoPublish cache if pub_date or unpub_date are set
 
 CacheMaster 1.1.1-pl
 ---------------------------------
-Fixed conflict with MODX 2.2.6
-Now works with both Resources and Elements (except Templates)
-Better sanity checks
+ - Fixed conflict with MODX 2.2.6
+ - Now works with both Resources and Elements (except Templates)
+ - Better sanity checks
 
 CacheMaster 1.0.3
 ---------------------------------
-Fixed bug with property name
-Refactored to uncheck Empty Cache checkbox
+ - Fixed bug with property name
+ - Refactored to uncheck Empty Cache checkbox
 
 
 CacheMaster 1.0.0
 ---------------------------------
-Initial Version
+ - Initial Version
